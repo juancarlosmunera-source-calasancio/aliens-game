@@ -42,6 +42,7 @@ BOMB_ODDS = 60  # chances a new bomb will drop
 ALIEN_RELOAD = 12  # frames between new aliens
 SCREENRECT = pg.Rect(0, 0, 640, 480)
 SCORE = 0
+LIFES = 5
 
 main_dir = os.path.split(os.path.abspath(__file__))[0]
 
@@ -237,16 +238,16 @@ class Lifes(pg.sprite.Sprite):
         self.font = pg.font.Font(None, 20)
         self.font.set_italic(1)
         self.color = "green"
-        self.lastscore = -1
+        self.lastlifes = -1
         self.update()
         self.rect = self.image.get_rect().move(560, 450)
         #self.rect = self.image.get_rect().move(10, 450)
 
     def update(self, *args, **kwargs):
         """We only update the score in update() when it has changed."""
-        if SCORE != self.lastscore:
-            self.lastscore = SCORE
-            msg = f"Score: {SCORE}"
+        if LIFES != self.lastlifes:
+            self.lastlifes = LIFES
+            msg = f"Score: {LIFES}"
             self.image = self.font.render(msg, 0, self.color)
 
 
@@ -310,6 +311,7 @@ def main(winstyle=0):
 
     # initialize our starting sprites
     global SCORE
+    global LIFES
     player = Player(all)
     Alien(
         aliens, all, lastalien
@@ -381,7 +383,9 @@ def main(winstyle=0):
             Explosion(alien, all)
             Explosion(player, all)
             SCORE = SCORE + 1
-            player.kill()
+            LIFES = LIFES - 1
+            if LIFES == 0:
+                player.kill()
 
         # See if shots hit the aliens.
         for alien in pg.sprite.groupcollide(aliens, shots, 1, 1).keys():
