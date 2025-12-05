@@ -247,7 +247,7 @@ class Lifes(pg.sprite.Sprite):
         """We only update the score in update() when it has changed."""
         if LIFES != self.lastlifes:
             self.lastlifes = LIFES
-            msg = f"Score: {LIFES}"
+            msg = f"Lifes: {LIFES}"
             self.image = self.font.render(msg, 0, self.color)
 
 
@@ -400,7 +400,9 @@ def main(winstyle=0):
                 boom_sound.play()
             Explosion(player, all)
             Explosion(bomb, all)
-            player.kill()
+            LIFES = LIFES - 1
+            if LIFES == 0:
+                player.kill()
 
         # draw the scene
         dirty = all.draw(screen)
