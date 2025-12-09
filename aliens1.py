@@ -42,7 +42,7 @@ BOMB_ODDS = 60  # chances a new bomb will drop
 ALIEN_RELOAD = 12  # frames between new aliens
 SCREENRECT = pg.Rect(0, 0, 640, 480)
 SCORE = 0
-LIFES = 5
+LIVES = 5
 
 main_dir = os.path.split(os.path.abspath(__file__))[0]
 
@@ -230,7 +230,7 @@ class Score(pg.sprite.Sprite):
             msg = f"Score: {SCORE}"
             self.image = self.font.render(msg, 0, self.color)
 
-class Lifes(pg.sprite.Sprite):
+class Lives(pg.sprite.Sprite):
     """to keep track of the score."""
 
     def __init__(self, *groups):
@@ -238,16 +238,16 @@ class Lifes(pg.sprite.Sprite):
         self.font = pg.font.Font(None, 20)
         self.font.set_italic(1)
         self.color = "green"
-        self.lastlifes = -1
+        self.lastlives = -1
         self.update()
         self.rect = self.image.get_rect().move(560, 450)
         #self.rect = self.image.get_rect().move(10, 450)
 
     def update(self, *args, **kwargs):
         """We only update the score in update() when it has changed."""
-        if LIFES != self.lastlifes:
-            self.lastlifes = LIFES
-            msg = f"Lifes: {LIFES}"
+        if LIVES != self.lastlives:
+            self.lastlives = LIVES
+            msg = f"Lives: {LIVES}"
             self.image = self.font.render(msg, 0, self.color)
 
 
@@ -383,7 +383,7 @@ def main(winstyle=0):
             Explosion(alien, all)
             Explosion(player, all)
             SCORE = SCORE + 1
-            LIFES = LIFES - 1
+            LIVES = LIVES - 1
             if LIFES == 0:
                 player.kill()
 
@@ -400,8 +400,8 @@ def main(winstyle=0):
                 boom_sound.play()
             Explosion(player, all)
             Explosion(bomb, all)
-            LIFES = LIFES - 1
-            if LIFES == 0:
+            LIVES = LIVES - 1
+            if LIVES == 0:
                 player.kill()
 
         # draw the scene
